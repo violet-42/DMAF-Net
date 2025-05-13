@@ -13,12 +13,12 @@
 Incomplete multi-modal medical image segmentation faces critical challenges from modality imbalance, including imbalanced modality missing rates and heterogeneous modality contributions. Existing methods are constrained by idealized complete-modality assumptions and fail to dynamically balance contributions while ignoring structural relationships between modalities, resulting in suboptimal performance in real-world clinical scenarios. To address these limitations, we propose the Dynamic Modality-Aware Fusion Network (DMAF-Net), which integrates three key innovations: 1) A Dynamic Modality-Aware Fusion (DMAF) module that combines transformer attention with adaptive masking to suppress missing-modality interference while dynamically weighting modality contributions through attention maps; 2) A synergistic relation distillation and prototype distillation framework that enforces global-local feature alignment via covariance consistency and masked graph attention, while ensuring semantic consistency through cross-modal class-specific prototype alignment; 3) A Dynamic Training Monitoring Strategy (DTMS) that stabilizes optimization under imbalanced missing rates by tracking distillation gaps in real-time, and adaptively reweighting losses and scaling gradients to balance convergence speeds across modalities. Extensive experiments on BraTS2020 and MyoPS2020 demonstrate that DMAF-Net outperforms existing methods for incomplete multi-modal medical image segmentation. This work not only advances the field of incomplete multi-modal medical image segmentation but also provides more reliable technical support for real-world clinical diagnosis.
 ### • DMAF-Net
 <div align="center">
-<img src="assets/DMAF.png" />
+<img src="assets/DMAF.jng" />
 </div>
 
 ### • Architecture
 <div align="center">
-<img src="assets/architecture.png" />
+<img src="assets/architecture.jng" />
 </div>
 
 ###  Installation
