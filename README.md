@@ -13,12 +13,12 @@
 Incomplete multi-modal medical image segmentation faces critical challenges from modality imbalance, including imbalanced modality missing rates and heterogeneous modality contributions. Existing methods are constrained by idealized complete-modality assumptions and fail to dynamically balance contributions while ignoring structural relationships between modalities, resulting in suboptimal performance in real-world clinical scenarios. To address these limitations, we propose the Dynamic Modality-Aware Fusion Network (DMAF-Net), which integrates three key innovations: 1) A Dynamic Modality-Aware Fusion (DMAF) module that combines transformer attention with adaptive masking to suppress missing-modality interference while dynamically weighting modality contributions through attention maps; 2) A synergistic relation distillation and prototype distillation framework that enforces global-local feature alignment via covariance consistency and masked graph attention, while ensuring semantic consistency through cross-modal class-specific prototype alignment; 3) A Dynamic Training Monitoring Strategy (DTMS) that stabilizes optimization under imbalanced missing rates by tracking distillation gaps in real-time, and adaptively reweighting losses and scaling gradients to balance convergence speeds across modalities. Extensive experiments on BraTS2020 and MyoPS2020 demonstrate that DMAF-Net outperforms existing methods for incomplete multi-modal medical image segmentation. This work not only advances the field of incomplete multi-modal medical image segmentation but also provides more reliable technical support for real-world clinical diagnosis.
 ### • DMAF-Net
 <div align="center">
-<img src="assets/cluster.png" />
+<img src="assets/DMAF.png" />
 </div>
 
 ### • Architecture
 <div align="center">
-<img src="assets/framework.png" />
+<img src="assets/architecture.png" />
 </div>
 
 ###  Installation
@@ -28,43 +28,44 @@ pip install -r requirements.txt
 ```
 ### Dataset downloading
 Datasets we used are as follows:
-- **MIMIC-CXR**: We downloaded the [MIMIC-CXR-JPG](https://physionet.org/content/mimic-cxr-jpg/2.0.0/) dataset as the radiographs. Paired medical reports can be downloaded in [MIMIC-CXR](https://physionet.org/content/mimic-cxr/2.0.0/mimic-cxr-reports.zip).
 
-- **CheXpert**: We downloaded the [CheXpert](https://stanfordmlgroup.github.io/competitions/chexpert/) dataset which consisting of 224,316 chest radiographs of 65,240 patients.
+- **BraTS2020**: [Kaggle](https://www.kaggle.com/datasets/awsaf49/brats20-dataset-training-validation).
 
-- **RSNA**: We used the stage 2 of RSNA dataset in [Kaggle](https://www.kaggle.com/competitions/rsna-pneumonia-detection-challenge/data). 
+- **MyoPS2020**: [Zmiclab](https://zmiclab.github.io/zxh/0/myops20/). 
 
-- **COVIDx**: We used the version 6 of COVIDx dataset in [Kaggle](https://www.kaggle.com/datasets/andyczhao/covidx-cxr2).
 
-- **SIIM**: We downloaded the stage 1 of SIIM dataset in [Kaggle](https://www.kaggle.com/competitions/siim-acr-pneumothorax-segmentation/data).
-
-- **Object-CXR**: We downloaded the object-CXR dataset in its [official website](https://academictorrents.com/details/fdc91f11d7010f7259a05403fc9d00079a09f5d5).
-
-After downloading datasets, please check if the path in `cgns/constants.py` is correct.
+After downloading datasets, please check if the path in `codes/options.py` is correct.
 
 ### Data Preprocessing
-We preprocessed these datasets and split the dataset into train/val/test set using the code in `cgns/preprocess`.
-
-### Pre-training
+you can simply conduct the preprocessing as following:
+``` python
+python code/preprocessing/preprocess_brats.py
+python code/preprocessing/data_split.py
+python code/preprocessing/generate_imb_mr.py
 ```
-CUDA_VISIBLE_DEVICES=0,1 python cgns_module.py --gpus 2 --strategy ddp
+After preprocessing, your folder structure is assumed to be:
 ```
-
-### Finetune on downstream tasks
-#### Linear classification
+DMAF-Net/
+├── datasets
+│   ├── BraTS
+│   │   ├── BRATS2020_Training_Data
+│   │   │   ├── ...
+│   │   ├── BRATS2020_Training_none_npy
+│   │   │   ├── seg
+│   │   │   ├── vol
+│   │   │   ├── test.txt
+│   │   │   ├── train.txt
+│   │   │   ├── val.txt
+│   │   ├── brats_split
+│   │   │   ├── Brats2020_imb_split_mr2468.csv
+├── code
+│   ├── ...
+└── ...
 ```
-CUDA_VISIBLE_DEVICES=1 python cgns_finetuner.py --gpus 1 --dataset chexpert --data_pct 0.01
+### Experiment
+You can conduct the experiment as following if everything is ready.
 ```
-We can use `--dataset` to set specific dataset for finetuning. Here, 3 datsets are available: chexpert, rsna and covidx.
-
-#### Object detection
+cd ./code
+python train.py
+python test.py
 ```
-CUDA_VISIBLE_DEVICES=0 python cgns_detector.py --devices 1 --dataset rsna --data_pct 1 --learning_rate 5e-4
-```
-Here, 2 datsets are available: rsna and object_cxr.
-
-#### Semantic segmentation
-```
-CUDA_VISIBLE_DEVICES=0 python cgns_segmenter.py --gpus 1 --data_pct 1 --dataset rsna --batch_size 16 --learning_rate 5e-4
-```
-Here, 2 datsets are available: rsna and siim.
