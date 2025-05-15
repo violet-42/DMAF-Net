@@ -21,6 +21,8 @@ Incomplete multi-modal medical image segmentation faces critical challenges from
 <img src="assets/architecture.jpg" />
 </div>
 
+### When our paper is accepted, we will publish our code.
+
 ###  Installation
 All our experiments are implemented based on the PyTorch framework with one 24G NVIDIA Geforce RTX 3090 GPU, and we recommend installing the following package versions:
 - python=3.9.21
