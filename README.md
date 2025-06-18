@@ -1,10 +1,10 @@
 <div align="center">
 <h1> DMAF-Net </h1>
-<h3>Cross-Modal Clustering-Guided Negative Sampling for Self-Supervised Joint Learning from Medical Images and Reports</h3>
+<h3>DMAF-Net: An Effective Modality Rebalancing Framework for Incomplete Multi-Modal Medical Image Segmentation</h3>
 
-[Hongxing Li](https://orcid.org/0009-0002-7958-3976)<sup>1</sup> ,[Zunhui Xia](https://orcid.org/0009-0008-6706-5817)<sup>1</sup> ,[Libin Lan](https://orcid.org/0000-0003-4754-813X)<sup>1</sup> :email:</sup>
+[Libin Lan]<sup>1</sup> ,[Hongxing Li]<sup>1</sup> ,[Zunhui Xia]<sup>1</sup> ,[Yudong Zhang]<sup>2</sup> :email:</sup>
 
-🏢 <sup>1</sup> College of Computer Science and Engineering, Chongqing University of Technology.  (<sup>:email:</sup>) corresponding author.
+🏢 <sup>1</sup> College of Computer Science and Engineering, Chongqing University of Technology. <sup>2</sup> School of Computer Science and Engineering, Southeast University.  (<sup>:email:</sup>) corresponding author.
 </div>
 
 ## 👇Overview
